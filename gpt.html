@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IPInfo Lookup Tool</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 40px;
+      text-align: center;
+    }
+    .container {
+      background: white;
+      max-width: 600px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #myInfo, #customInfo {
+      text-align: left;
+      margin-top: 20px;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>IPInfo Lookup Tool</h1>
+
+    <h3>Your IP Info</h3>
+    <button onclick="getMyIP()">Get My Info</button>
+    <div id="myInfo"></div>
+
+    <hr>
+
+    <h3>Lookup Another IP</h3>
+    <input type="text" id="customIp" placeholder="Enter public IP (e.g. 8.8.8.8)">
+    <button onclick="lookupIP()">Lookup</button>
+    <div id="customInfo"></div>
+  </div>
+
+  <script>
+    const accessToken = '3bce751480e580';
+
+    async function getMyIP() {
+      const url = `https://ipinfo.io/json?token=${accessToken}`;
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displayInfo(data, "myInfo");
+      } catch (err) {
+        document.getElementById("myInfo").innerText = "Failed to fetch your IP info.";
+      }
+    }
+
+    async function lookupIP() {
+      const ip = document.getElementById("customIp").value.trim();
+      if (!ip) return alert("Please enter an IP address.");
+      const url = `https://ipinfo.io/${ip}?token=${accessToken}`;
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data && !data.error) {
+          displayInfo(data, "customInfo");
+        } else {
+          document.getElementById("customInfo").innerText = "Invalid or private IP.";
+        }
+      } catch (err) {
+        document.getElementById("customInfo").innerText = "Error fetching IP info.";
+      }
+    }
+
+    function displayInfo(data, elementId) {
+      const timeZone = data.timezone;
+      const localTime = timeZone ? new Date().toLocaleString("en-US", { timeZone }) : "N/A";
+      document.getElementById(elementId).innerHTML = `
+        <p><strong>IP:</strong> ${data.ip || "N/A"}</p>
+        <p><strong>City:</strong> ${data.city || "N/A"}</p>
+        <p><strong>Region:</strong> ${data.region || "N/A"}</p>
+        <p><strong>Country:</strong> ${data.country || "N/A"}</p>
+        <p><strong>Location (lat,long):</strong> ${data.loc || "N/A"}</p>
+        <p><strong>ISP:</strong> ${data.org || "N/A"}</p>
+        <p><strong>Timezone:</strong> ${data.timezone || "N/A"}</p>
+        <p><strong>Local Time:</strong> ${localTime}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
