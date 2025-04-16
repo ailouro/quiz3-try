@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Information from IP</title>
+  <link rel="stylesheet" href="quiz3.css">
+</head>
+<body>
+  <header>Know more about in your IP Address</header>
+
+  <a href="#" class="logo-gif">
+    <img src="quiz3_logo.png" alt="Logo" class="logo" width="50rem" height="50rem">
+  </a>
+
+  <div class="back">
+    <div class="intro">
+      <h2>Welcome!</h2>
+      <p>We'll help you find detailed information <br>
+         about your own IP address or any public IP you enter. <br>
+         The information provided is city, country, ISP, and timezone. <br><br>
+         Just click the button or enter an IP to begin!</p>
+    </div>
+
+    <div class="Texts">
+      <h2>Your IP Info</h2>
+
+      <div class="button-group" id="myInfoWrapper">
+        <button onclick="getMyIP()">Get My Info</button>
+        <div id="myInfo" class="popup-box hidden"></div>
+      </div>
+
+      <hr>
+
+      <div class="button-group" id="customInfoWrapper">
+        <input type="text" id="customIp" placeholder="Enter other public IP">
+        <button onclick="lookupIP()">Lookup</button>
+        <div id="customInfo" class="popup-box hidden"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="socials">
+    <p>
+      <a href="https://instagram.com/mahiwaguh" target="_blank">@mahiwaguh</a>
+      <a href="https://instagram.com/sherrylvr" target="_blank">@sherrylvr</a>
+      <a href="https://instagram.com/ann_tifan" target="_blank">@ann_tifan</a>
+    </p>
+  </div>
+
+  <script src="quiz3.js"></script>
+</body>
+</html>
